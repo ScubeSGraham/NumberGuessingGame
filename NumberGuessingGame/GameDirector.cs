@@ -12,6 +12,7 @@ namespace NumberGuessingGame
         public const Int32 MIN_ANSWER = 1;
         public const Int32 MAX_ANSWER = 10;
         public const Int32 STARTING_POINTS = 16;
+
         public Int32 HighScore { get; private set; }
         public Int32 CurrentScore { get; private set; }
         public Int32 LastScore { get; private set; }
