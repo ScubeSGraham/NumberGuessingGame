@@ -9,48 +9,27 @@ namespace NumberGuessingGame
     public class GameDirector
     {
         public const String GAME_DATA_FILE = @"C:\NumberGuessingGame\History.txt";
-        public const Int32 MIN_ANSWER = 1;
-        public const Int32 MAX_ANSWER = 10;
-        public const Int32 STARTING_POINTS = 16;
 
         public Int32 HighScore { get; private set; }
         public Int32 CurrentScore { get; private set; }
         public Int32 LastScore { get; private set; }
         public Boolean KeepGuessing { get; private set; }
+        public Int32 MinAnswer { get; private set; }
+        public Int32 MaxAnswer { get; private set; }
+        public Int32 StartingPoints { get; private set; }
+
 
         private Int32 _answer;
 
-        public Int32 MinAnswer
+        private GameDirector()
         {
-            get
-            {
-                return MIN_ANSWER;
-            }
-            private set { }
+            //No implementation
         }
 
-        public Int32 MaxAnswer
-        {
-            get
-            {
-                return MAX_ANSWER;
-            }
-            private set { }
-        }
-
-        public Int32 StartingPoints
-        {
-            get
-            {
-                return STARTING_POINTS;
-            }
-            private set { }
-        }
-
-        public GameDirector()
-        {
+        public GameDirector(int minAnswer, int maxAnswer, int startingPoints)
+        { 
             ReadGameData();
-            InitializeGame();
+            InitializeGame(minAnswer, maxAnswer, startingPoints);
         }
 
         private void ReadGameData()
@@ -79,11 +58,14 @@ namespace NumberGuessingGame
             }
         }
 
-        private void InitializeGame()
+        private void InitializeGame(int minAnswer, int maxAnswer, int startingPoints)
         {
+            MinAnswer = minAnswer;
+            MaxAnswer = maxAnswer;
+            StartingPoints = startingPoints;
             Random rnd = new Random();
-            _answer = rnd.Next(MIN_ANSWER, MAX_ANSWER);
-            CurrentScore = STARTING_POINTS;
+            _answer = rnd.Next(MinAnswer, MaxAnswer);
+            CurrentScore = StartingPoints;
             KeepGuessing = true;
         }
 

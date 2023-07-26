@@ -1,7 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-using NumberGuessingGame;
+﻿using NumberGuessingGame;
 
-GameDirector director = new GameDirector();
+GameDirector director = new GameDirector(1, 100, 128);
 
 Console.WriteLine("I'm thinking of a number between " + director.MinAnswer + " and " + director.MaxAnswer + ", what is it?");
 Console.WriteLine("Your highest score ever is: " + director.HighScore);
