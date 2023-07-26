@@ -1,71 +1,36 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using NumberGuessingGame;
 
-int highScore = 0;
-int lastScore = 0;
+GameDirector director = new GameDirector();
 
-using (StreamReader file = new StreamReader(@"C:\NumberGuessingGame\History.txt"))
+Console.WriteLine("I'm thinking of a number between " + director.MinAnswer + " and " + director.MaxAnswer + ", what is it?");
+Console.WriteLine("Your highest score ever is: " + director.HighScore);
+Console.WriteLine("Last time, you got: " + director.LastScore);
+
+while (director.KeepGuessing)
 {
-    highScore = int.Parse(file.ReadLine());
-    lastScore = int.Parse(file.ReadLine());
-    file.Close();
-}
+    Console.WriteLine("Current available points: " + director.CurrentScore);
 
-Random rnd = new Random();
-int answer = rnd.Next(1, 11);
-int currentPoints = 16;
+    int inputNumber = int.Parse(Console.ReadLine());
+    ResultType result = director.GuessNumber(inputNumber);
 
-Console.WriteLine("I'm thinking of a number between 1 and 10, what is it?");
-Console.WriteLine("Your highest score ever is: " + highScore);
-Console.WriteLine("Last time, you got: " + lastScore);
-
-bool guessAgain = true;
-
-while (guessAgain == true)
-{
-    Console.WriteLine("Current available points: " + currentPoints);
-
-    String? inputString = Console.ReadLine();
-    int inputNumber = int.Parse(inputString);
-
-    if (inputNumber == answer)
+    if (result == ResultType.Correct)
     {
         Console.WriteLine("That's right!  Good job!!");
-        Console.WriteLine("You received " + currentPoints + " points.");
-        guessAgain = false;
+        Console.WriteLine("You received " + director.CurrentScore + " points.");
     }
-    else if (inputNumber > answer)
+    else if (result == ResultType.TooHigh)
     {
         Console.WriteLine("That's too high, guess something lower");
     }
-    else if (inputNumber < answer)
+    else if (result == ResultType.TooLow)
     {
         Console.WriteLine("That's too low, guess something higher");
     }
-
-    if (inputNumber != answer)
+    else if (result == ResultType.LoseGame)
     {
-        currentPoints = currentPoints / 2;
-
-        if (currentPoints == 0)
-        {
-
-            Console.WriteLine("Sorry, you failed, try again.");
-            guessAgain = false;
-        }
+        Console.WriteLine("Sorry, you failed, try again.");
     }
-}
-
-using (StreamWriter writer = new StreamWriter(@"C:\NumberGuessingGame\History.txt"))
-{
-    int outputScore = highScore;
-
-    if (currentPoints > highScore)
-    {
-        outputScore = currentPoints;
-    }
-
-    writer.WriteLine(outputScore);
-    writer.WriteLine(currentPoints);
 }
 
 
